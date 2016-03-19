@@ -2,11 +2,14 @@
     #the-canvas {
         cursor: move;
     }
+  	.control-label{
+      font-weight: bold;
+    }
 </style>
 
 <div class="row">
     <!-- Success and Error Messages for the user --> 
-    <div class="col-md-6 col-md-offset-2" style="height:50px">
+    <div class="span6 offset2" style="height:50px">
         <div id="success" class="alert alert-success" style="display:none;">
             <a class="close">×</a>
             <strong>Well done! Your answer has been saved</strong>
@@ -25,7 +28,7 @@
                 <a class="btn small" href="/project">or, Check other projects</a>
             </div>
         </div>
-        <div id="error" class="alert alert-danger" style="display:none;">
+        <div id="error" class="alert alert-error" style="display:none;">
             <a class="close">×</a>
             <strong>Error! Something went wrong, please contact the site administrators</strong>
         </div>
@@ -33,55 +36,197 @@
 </div> <!-- End Success and Error Messages for the user -->
 
 <div class="row skeleton">
-    <div id="question" class="col-md-12">
+    <div id="question" class="span12">
       <h1>Question</h1>
-      <span class="label label-info"><i class="fa fa-bullhorn"></i> Important</span> <strong>This is just a demo project. You can re-use the code to create your own project.</strong>
+      <span class="label label-info"><i class="icon icon-bullhorn"></i> Important</span> <strong>This is just a demo project. You can re-use the code to create your own project.</strong>
       <hr>
     </div>
 </div>
 
 <div class="row skeleton">
     <!-- Answer buttons -->
-    <div id="answer" class="col-sm-8" style="text-align:center;">
-        <div class="btn-group-md" style="padding-bottom:5px;">
-            <button id="prev" class="btn btn-primary btn-navigate disabled" value="prev"><i class="fa fa-arrow-left"></i></button>
-            <button class="btn btn-primary btn-zoom" value=0>1:1</button>
-            <button class="btn btn-primary btn-zoom" value=1><i class="fa fa-search-plus"></i></button>
-            <button class="btn btn-primary btn-zoom" value=-1><i class="fa fa-search-minus"></i></button>
-            <button id="next" class="btn btn-primary btn-navigate" value="next"><i class="fa fa-arrow-right"></i></button>
+    <div id="answer" class="span8" style="text-align:center;">
+        <div class="btn-group" style="padding-bottom:5px;">
+            <button id="prev" class="btn btn-navigate disabled" value="prev"><i class="icon-arrow-left"></i></button>
+            <button class="btn btn-zoom" value=0>1:1</button>
+            <button class="btn btn-zoom" value=1><i class="icon icon-white icon-zoom-in"></i></button>
+            <button class="btn btn-zoom" value=-1><i class="icon icon-white icon-zoom-out"></i></button>
+            <button id="next" class="btn btn-navigate" value="next"><i class="icon-arrow-right"></i></button>
         </div>
         <div id="pages" style="margin-top:2%;">
           <p>Page <span id="currentPage">#</span> of <span id="totalPages">#</span></p>
         </div>
      </div>
-    <div class="col-sm-4">
+    <div class="span4">
         <p>You are working now on task: <span id="task-id" class="label label-warning">#</span></p>
         <p>You have completed: <span id="done" class="label label-info"></span> tasks from
-        <span id="total" class="label label-info"></span></p>
+        <span id="total" class="label label-inverse"></span></p>
         <div class="progress progress-striped">
-            <div id="progress" rel="tooltip" title="#" class="progress-bar" style="width: 0%;" role="progressbar"></div>
+            <div id="progress" rel="tooltip" title="#" class="bar" style="width: 0%;"></div>
         </div>
         <div>
-            <h5>Write here the transcription</h5>
-            <form class="form-inline">
+            <!--h5>Write here the transcription</h5--!>
+            <!--form class="form-inline">
                 <textarea id="text" rows="10" style="width:100%;"></textarea>
-            </form>
-            <button class="btn btn-submit">Submit transcription!</button>
+            </form-->
+          
+          	<form class="form" role="form">
+            	<div class="form-group">
+                	<div class="col-sm-12">
+                		<div class="dropdown">
+                          <button class="btn btn-default dropdown-toggle" type="button" id="dropdown-category" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <span class="value">Category</span>
+                            <span class="caret"></span>
+                          </button>
+                          <br><br>
+                          <ul id="dropdown-menu-category" class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li><a>Death Penalty</a></li>
+                            <li><a>Human Rights Defender</a></li>
+                            <li><a>Prisoners of Conscience</a></li>
+                            <li><a>Refugees and Migrants</a></li>
+                            <li><a>Stop Action</a></li>
+                          </ul>
+                        </div>
+                	</div>
+            	</div>
+              	<div class="form-group">
+                	<label class="control-label col-sm-2" for="perpetrator">Perpetrator:</label>
+                	<div class="col-sm-10"> 
+                  		<input type="text" class="form-control" id="perpetrator">
+                	</div>
+              	</div>
+              	<div class="form-group">
+                	<label class="control-label col-sm-2" for="victim">Victim:</label>
+                	<div class="col-sm-10"> 
+                  		<input type="text" class="form-control" id="victim">
+                	</div>
+              	</div>
+              	<div class="form-group">
+                	<label class="control-label col-sm-2" for="reason">Reason:</label>
+                	<div class="col-sm-10"> 
+                  		<input type="text" class="form-control" id="reason">
+                	</div>
+              	</div>
+              	
+              	<!-- Refugees and Migrants -->
+             	<div class="ram-form-groups" style="display:none">
+                  <div class="form-group">
+                    <label class="control-label col-sm-2">Type:</label>
+                    <div class="col-sm-10">
+                      <div class="radio">
+                        <label><input type="radio" name="mar-type">Economic Migrant</label>
+                      </div>
+                      <div class="radio">
+                        <label><input type="radio" name="mar-type">Refugee</label>
+                      </div>
+                    </div>
+                  </div>
+              	</div>
+              
+              	<!-- Human Rights Defenders -->
+             	<div class="hrd-form-groups" style="display:none">
+                  <div class="form-group">
+                    <label class="control-label col-sm-2">Context:</label>
+                    <div class="col-sm-10">
+                      <div class="checkbox">
+                        <label><input type="checkbox" value="Prosecuted on fabricated charges">Prosecuted on fabricated charges.</label>
+                      </div>
+                      <div class="checkbox">
+                        <label><input type="checkbox" value="Crime not recognized under international law.">Crime not recognized under international law.</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              
+              	<!-- Prisoners of Conscience -->
+             	<div class="poc-form-groups" style="display:none">
+                  <div class="form-group">
+                    <label class="control-label col-sm-2" for="imprisoned-since">Imprisoned Since:</label>
+                    <div class="col-sm-10"> 
+                      <input type="text" class="form-control" id="imprisoned-since" placeholder="dd/mm/yyyy">
+                	</div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-sm-2">Context:</label>
+                    <div class="col-sm-10">
+                      <div class="checkbox">
+                        <label><input type="checkbox" value="Prosecuted on fabricated charges">Prosecuted on fabricated charges.</label>
+                      </div>
+                      <div class="checkbox">
+                        <label><input type="checkbox" value="Crime not recognized under international law.">Crime not recognized under international law.</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              
+              	<!-- Death Penalty -->
+              <div class="dp-form-groups" style="display:none">
+                  <div class="form-group">
+                    <label class="control-label col-sm-2">Context:</label>
+                    <div class="col-sm-10">
+                      <div class="checkbox">
+                        <label><input type="checkbox" value="Related to terror">Related to terror.</label>
+                      </div>
+                      <div class="checkbox">
+                        <label><input type="checkbox" value="Forced confession">Forced confession.</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+          	</form>
+            <button class="btn btn-submit">Submit</button>
         </div>
     </div>
 </div>
 
-<script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
-<script src="http://hitconsultants.com/dragscroll_scrollsync/scrollsync.js"></script>
-<script src="http://hitconsultants.com/dragscroll_scrollsync/dragscrollable.js"></script>
-<script src="/static/js/pybossa/pybossa.js" type="text/javascript"></script>
-<!-- Use latest PDF.js build from Github (it may not work in some browsers due to strict MIME type checking could be enabled) -->
-<!-- <script type="text/javascript" src="https://raw.github.com/mozilla/pdf.js/gh-pages/build/pdf.js"></script>-->
-<!-- For this reason we use the one provided by CrowdCrafting -->
-<script src="/static/js/pdf/pdf.js" type="text/javascript"></script>
+<script src="https://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
+<script src="/static/js/pdf/scrollsync.js"></script>
+<script src="/static/js/pdf/dragscrollable.js"></script>
+<script src="/static/js/pdf/pdf.js" type="text/javascript" ></script>
 
 <script type="text/javascript">
 (function() {
+  
+  
+  
+$("#dropdown-menu-category li a").click(function(){
+  var category = $(this).text();
+  $("#dropdown-category .value").text(category);
+  $("#dropdown-category .value").val(category);
+  
+
+  if(category === "Human Rights Defender"){
+    $(".ram-form-groups").css('display', 'none');
+    $(".hrd-form-groups").css('display', 'block');
+    $(".poc-form-groups").css('display', 'none');
+    $(".dp-form-groups").css('display', 'none');
+    
+  }else if(category === "Prisoners of Conscience"){
+    $(".ram-form-groups").css('display', 'none');
+    $(".hrd-form-groups").css('display', 'none');
+    $(".poc-form-groups").css('display', 'block');
+    $(".dp-form-groups").css('display', 'none');
+    
+  }else if(category === "Refugees and Migrants"){
+    $(".ram-form-groups").css('display', 'block');
+    $(".hrd-form-groups").css('display', 'none');
+    $(".poc-form-groups").css('display', 'none');
+    $(".dp-form-groups").css('display', 'none');
+    
+  }else if(category === "Death Penalty"){
+    $(".ram-form-groups").css('display', 'none');
+    $(".hrd-form-groups").css('display', 'none');
+    $(".poc-form-groups").css('display', 'none');
+    $(".dp-form-groups").css('display', 'block');
+    
+  }else{
+    $(".ram-form-groups").css('display', 'none');
+  	$(".hrd-form-groups").css('display', 'none');
+    $(".poc-form-groups").css('display', 'none');
+    $(".dp-form-groups").css('display', 'none');
+  }
+});
+  
 //
 // Disable workers to avoid yet another cross-origin issue (workers need the URL of
 // the script to be loaded, and currently do not allow cross-origin scripts)
@@ -172,7 +317,7 @@ function goNextPage(task) {
 }
 
 function loadUserProgress() {
-    pybossa.userProgress('pdftranscribe').done(function(data){
+    pybossa.userProgress('test-1').done(function(data){
         var pct = Math.round((data.done*100)/data.total);
         $("#progress").css("width", pct.toString() +"%");
         $("#progress").attr("title", pct.toString() + "% completed!");
@@ -209,8 +354,8 @@ pybossa.taskLoaded(function(task, deferred){
         var canvas = $("<canvas/>", {"id": "canvas_" + task.id});
         canvas.css("border", "1px solid black");
         var viewport = $("<div/>", {"id": "viewport_" + task.id});
-        viewport.css("width",  "100%");
-        viewport.css("height", "100%");
+        viewport.css("width",  "620px");
+        viewport.css("height", "755px");
         viewport.css("overflow", "auto");
         viewport.css("display", "none");
         viewport.append(canvas);
@@ -274,6 +419,6 @@ pybossa.presentTask(function(task, deferred){
     }
 });
 
-pybossa.run('pdftranscribe');
+pybossa.run('test-1');
 })();
 </script>
