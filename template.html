@@ -381,7 +381,15 @@ pybossa.taskLoaded(function(task, deferred){
 pybossa.presentTask(function(task, deferred){
     if ( !$.isEmptyObject(task) ) {
         loadUserProgress();
+      	
+      	// Reset values
       	//$("textarea#text").val('');
+      	$("#dropdown-category .value").text('Category');
+        $("#perpetrator").val('');
+        $("#victim").val('');
+        $("#reason").val('');
+          
+  
         $("#viewport_" + task.id).show();
         showPaginationOptions(task);
         renderPage(task);
