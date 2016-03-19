@@ -65,12 +65,12 @@
             <div id="progress" rel="tooltip" title="#" class="bar" style="width: 0%;"></div>
         </div>
         <div>
-            <!--h5>Write here the transcription</h5--!>
+            <!--h5>Write here the transcription</h5-->
             <!--form class="form-inline">
                 <textarea id="text" rows="10" style="width:100%;"></textarea>
             </form-->
           
-          	<form class="form" role="form">
+          	<form class="form" role="form" id="ua-form">
             	<div class="form-group">
                 	<div class="col-sm-12">
                 		<div class="dropdown">
@@ -114,10 +114,10 @@
                     <label class="control-label col-sm-2">Type:</label>
                     <div class="col-sm-10">
                       <div class="radio">
-                        <label><input type="radio" name="mar-type">Economic Migrant</label>
+                        <label><input type="radio" name="mar-type" value="Economic Migrant">Economic Migrant</label>
                       </div>
                       <div class="radio">
-                        <label><input type="radio" name="mar-type">Refugee</label>
+                        <label><input type="radio" name="mar-type" value="Refugee">Refugee</label>
                       </div>
                     </div>
                   </div>
@@ -192,7 +192,6 @@
 $("#dropdown-menu-category li a").click(function(){
   var category = $(this).text();
   $("#dropdown-category .value").text(category);
-  $("#dropdown-category .value").val(category);
   
 
   if(category === "Human Rights Defender"){
@@ -382,7 +381,7 @@ pybossa.taskLoaded(function(task, deferred){
 pybossa.presentTask(function(task, deferred){
     if ( !$.isEmptyObject(task) ) {
         loadUserProgress();
-        $("textarea#text").val('');
+      	//$("textarea#text").val('');
         $("#viewport_" + task.id).show();
         showPaginationOptions(task);
         renderPage(task);
@@ -404,13 +403,57 @@ pybossa.presentTask(function(task, deferred){
             }
         });
         $(".btn-submit").off('click').on('click', function(){
-            var answer = $("textarea#text").val();
-            $("#viewport_" + task.id).hide();
-            pybossa.saveTask(task.id, answer).done(function(data){
+          	//var answer = $("textarea#text").val();
+          	var answer = {};
+          
+          	var category = $("#dropdown-category .value").text();
+          	var perpetrator = $("#victim").val();
+          	var victim = $("#perpetrator").val();
+          	var reason = $("#reason").val();
+          
+          	
+          	if(category === "Category"){
+              alert("You must select a category");
+              
+            }else{
+              
+              answer['category'] = category;
+              answer['perpetrator'] = perpetrator;
+              answer['victim'] = victim;
+              answer['reason'] = reason;
+              
+              if(category === "Human Rights Defender"){
+                //$(".hrd-form-groups");
+              
+              }else if(category === "Prisoners of Conscience"){
+                //$(".poc-form-groups");
+            
+              }else if(category === "Refugees and Migrants"){
+                var theType = $('.ram-form-groups input[name=mar-type]:checked', '#ua-form').val();
+                if (theType == undefined){
+                	alert('Select a victim type');
+                }else{
+                  	answer['type'] = theType;
+                }
+            
+              }else if(category === "Death Penalty"){
+                //$(".dp-form-groups");
+                
+              }else{
+                // do nothing.
+              }
+              
+              console.log(answer);
+              
+              
+              $("#viewport_" + task.id).hide();
+              pybossa.saveTask(task.id, answer).done(function(data){
                 deferred.resolve();
                 $("#success").fadeIn();
                 setTimeout(function() { $("#success").fadeOut() }, 2000);
-            })
+              });
+            
+            }
         });
     }
     else {
